@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+    <title>
+        Information Stand Of Shop
+    </title>
+
+    <style type="text/css">
+
+        .header {
+            font-family: "Gill Sans", sans-serif;
+        }
+
+        .logo {
+            width: 5%;
+        }
+
+        .detail {
+            width: 85%;
+            padding-left: 25px;
+        }
+
+        .form-style {
+            width: 700px;
+        }
+        
+        .pi {
+            color: #0d8902;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces" />
+</h:head>
+
+<h:body>
+    <div class="fc-center fa-align-center pt-10">
+        <div class="mt-3 mb-3 fc-center" style="width: 100%;" align="center">
+            <h1><h:outputText styleClass="header" id="greet" value="#{popularProductsView.hello}"/></h1>
+        </div>
+
+
+            <div class="mt-3 mb-3 fc-center" style="width: 100%;" align="center">
+            <h:form id="form" styleClass="form-style header">
+                <c:if test="#{popularProductsView.items.size() == 0}">
+                    <table class="table-borderless">
+                        <tr>
+                            <td align="center" valign="middle" height="500">
+                                <div class="spinner-border text-success" style="width: 3rem; height: 3rem;">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <h2><span>Waiting for information...</span></h2>
+                            </td>
+                        </tr>
+                    </table>
+                </c:if>
+
+                <c:if test="#{popularProductsView.items.size() != 0}">
+                    <p:dataView var="item" value="#{popularProductsView.items}"
+                                gridIcon="pi pi-microsoft" listIcon="pi pi-list" layout="grid">
+
+                        <p:dataViewGridItem>
+                            <p:panel header="#{item.name}" style="text-align:center">
+                                <h:panelGrid columns="1" style="width:100%">
+                                    <p:graphicImage value="http://localhost:8080#{item.image}" height="150"/>
+
+                                    <h:outputText value="#{item.productGroup}" />
+
+                                    <p:commandLink update=":form:itemDetail" oncomplete="PF('itemDialog').show()" title="View Detail">
+                                        <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;"/>
+                                        <f:setPropertyActionListener value="#{item}" target="#{popularProductsView.selectedItem}" />
+                                    </p:commandLink>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:dataViewGridItem>
+
+                        <p:dataViewListItem>
+                            <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                                <p:graphicImage value="http://localhost:8080#{item.image}" height="150"/>
+
+                                <p:outputPanel>
+                                    <h:panelGrid columns="2" cellpadding="5">
+                                        <h:outputText value="Name:" />
+                                        <h:outputText value="#{item.name}" style="font-weight: bold"/>
+
+                                        <h:outputText value="Group:" />
+                                        <h:outputText value="#{item.productGroup}" style="font-weight: bold"/>
+
+                                        <h:outputText value="Price:" />
+                                        <h:outputText value="$ #{item.price}" style="font-weight: bold"/>
+                                    </h:panelGrid>
+                                </p:outputPanel>
+
+                                <p:commandLink update=":form:itemDetail" oncomplete="PF('itemDialog').show()" title="View Detail">
+                                    <h:outputText styleClass="ui-icon pi pi-search" style="margin:0 auto;" />
+                                    <f:setPropertyActionListener value="#{item}" target="#{popularProductsView.selectedItem}" />
+                                </p:commandLink>
+                            </h:panelGrid>
+                        </p:dataViewListItem>
+                    </p:dataView>
+
+                    <p:dialog header="Item Info"
+                              widgetVar="itemDialog"
+                              modal="true"
+                              showEffect="fade"
+                              hideEffect="fade"
+                              resizable="false" width="350">
+                        <p:outputPanel id="itemDetail" style="text-align:center;">
+                            <p:panelGrid  columns="2" rendered="#{not empty popularProductsView.selectedItem}" columnClasses="label,value">
+                                <f:facet name="header">
+                                    <p:graphicImage value="http://localhost:8080#{popularProductsView.selectedItem.image}" height="250"/>
+                                </f:facet>
+
+                                <h:outputText value="Name:" />
+                                <h:outputText value="#{popularProductsView.selectedItem.name}" />
+
+                                <h:outputText value="Description" />
+                                <h:outputText value="#{popularProductsView.selectedItem.description}"/>
+
+                                <h:outputText value="Price:" />
+                                <h:outputText value="$ #{popularProductsView.selectedItem.price}"/>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+
+                </c:if>
+
+                <o:socket channel="push" onopen="open" onmessage="socketListener"/>
+
+                <script type="text/javascript">
+
+                    function socketListener(message, channel, event) {
+                        console.log(message);
+                        window.location.reload();
+                    }
+
+                    function open() {
+                        console.log("socket connected");
+                    }
+                </script>
+            </h:form>
+        </div>
+    </div>
+</h:body>
+</html>
