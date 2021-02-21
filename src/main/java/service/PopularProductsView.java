@@ -39,6 +39,8 @@ public class PopularProductsView implements Serializable {
     private ProductDto selectedItem = new ProductDto();
     private String hello = "Most Popular Products";
 
+
+
     @PostConstruct
     public void init() {
         reciever.start();
