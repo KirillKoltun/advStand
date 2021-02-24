@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: __PROJECT__
+  namespace: shop
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: __PROJECT__
+  template:
+    metadata:
+      namespace: shop
+      labels:
+        app: __PROJECT__
+    spec:
+      containers:
+        - name: __PROJECT__
+          image: cr.yandex/__REGISTRY__/__PROJECT__/__VERSION__:latest
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: __PROJECT__
+spec:
+  selector:
+    app: __PROJECT__
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: LoadBalancer

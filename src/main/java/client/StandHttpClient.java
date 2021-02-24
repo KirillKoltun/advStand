@@ -8,9 +8,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import utils.JsonDeserializer;
 
 import javax.ejb.Singleton;
@@ -25,22 +22,8 @@ import java.util.List;
  */
 @Singleton
 @Log4j
-//@PropertySource("classpath:activeMQ.properties")
 public class StandHttpClient {
 
-
-//    @Value("${lkk.api:http://localhost:8080/stand")
-//            private String apiUrl;
-    //    @Value("#{ACTIVEMQ_HOST['http://localhost:8080/stand']}")
-//    public String activeMQHost;
-//    @Value("${some.key:1}")
-//    private String stringWithDefaultValue;
-//
-//    public void test() {
-//        for (int i = 0; i < 30; i++) {
-//            System.out.println(apiUrl);
-//        }
-//    }
 
     @Inject
     private JsonDeserializer deserializer;
