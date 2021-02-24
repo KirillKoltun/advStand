@@ -31,7 +31,7 @@ public class StandHttpClient {
     private final CloseableHttpClient httpClient = HttpClients.createDefault();
 
     public List<ProductDto> getInitItems() {
-        HttpGet request = new HttpGet("http://localhost:8080/stand");
+        HttpGet request = new HttpGet("http://project-shop/stand");
 
         try (CloseableHttpResponse response = httpClient.execute(request)) {
             HttpEntity entity = response.getEntity();

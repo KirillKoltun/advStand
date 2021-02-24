@@ -30,7 +30,7 @@ public class Reciever {
     private Session session = null;
 
     public void start() {
-        factory.setBrokerURL("failover://tcp://localhost:61616");
+        factory.setBrokerURL("failover://tcp://activemq:61616");
         try {
             if (connection == null) {
                 connection = factory.createQueueConnection();

@@ -69,7 +69,7 @@
                         <p:dataViewGridItem>
                             <p:panel header="#{item.name}" style="text-align:center">
                                 <h:panelGrid columns="1" style="width:100%">
-                                    <p:graphicImage value="http://localhost:8080#{item.image}" height="150"/>
+                                    <p:graphicImage value="http://project-shop#{item.image}" height="150"/>
 
                                     <h:outputText value="#{item.productGroup}" />
 
@@ -83,7 +83,7 @@
 
                         <p:dataViewListItem>
                             <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
-                                <p:graphicImage value="http://localhost:8080#{item.image}" height="150"/>
+                                <p:graphicImage value="http://project-shop#{item.image}" height="150"/>
 
                                 <p:outputPanel>
                                     <h:panelGrid columns="2" cellpadding="5">
@@ -115,7 +115,7 @@
                         <p:outputPanel id="itemDetail" style="text-align:center;">
                             <p:panelGrid  columns="2" rendered="#{not empty popularProductsView.selectedItem}" columnClasses="label,value">
                                 <f:facet name="header">
-                                    <p:graphicImage value="http://localhost:8080#{popularProductsView.selectedItem.image}" height="250"/>
+                                    <p:graphicImage value="http://project-shop#{popularProductsView.selectedItem.image}" height="250"/>
                                 </f:facet>
 
                                 <h:outputText value="Name:" />
