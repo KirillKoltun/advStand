@@ -28,4 +28,4 @@ deploy:
     - sed -i "s/__VERSION__/$CI_COMMIT_REF_SLUG-$CI_PIPELINE_ID/" deployment.yaml
     - sed -i "s/__REGISTRY__/${REGISTRY}/" deployment.yaml
     - sed -i "s/__PROJECT__/${CI_PROJECT_NAME}/" deployment.yaml
-    - kubectl apply -f deployment.yamlA
+    - kubectl apply -f deployment.yaml
